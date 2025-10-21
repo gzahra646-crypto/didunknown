@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>didunknown - Unleash Your Style!</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <button class="close-sidebar" id="close-sidebar">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="sidebar-content">
+      <a href="#" data-page="home" class="sidebar-link">Beranda</a>
+      <a href="#" data-page="catalog" class="sidebar-link">Katalog</a>
+      <a href="#" data-page="contact" class="sidebar-link">Contact</a>
+      <a href="#" data-page="about" class="sidebar-link">About Us</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="header-left">
+      <button class="menu-btn" id="menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">didunknown</div>
+    </div>
+    <nav>
+      <a href="#" data-page="home" class="nav-active">Beranda</a>
+      <a href="#" data-page="catalog">Katalog</a>
+      <a href="#" data-page="cart" class="cart-icon">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Loading Spinner -->
+    <div id="loading" class="spinner"></div>
+
+    <!-- Beranda -->
+    <section id="home" class="page active">
+      <div class="hero-box">
+        <div class="hero-content">
+          <h1>Unleash Your Style, Upgrade Your Vibes!</h1>
+          <p>
+            Selamat datang di koleksi baju kekinian yang dirancang khusus untuk kamu, generasi Z yang berani tampil beda! 
+            Kami menghadirkan desain-desain unik, warna-warna cerah, dan potongan yang stylish untuk membuat kamu tampil trendy dan percaya diri.
+          </p>
+          <p>
+            Baju kekinian yang tidak hanya tentang fashion, tapi juga tentang ekspresi diri. Dengan koleksi terbaru kami, 
+            kamu bisa menunjukkan kepribadianmu yang unik dan berani.
+          </p>
+          <p><b>Cek koleksi kami sekarang dan temukan baju kekinian yang paling sesuai dengan stylemu!</b></p>
+          <button class="primary-btn" onclick="showPage('catalog')">Belanja Sekarang</button>
+        </div>
+        <div class="hero-image">
+          <!-- PENANDA FOTO: Ganti dengan foto produk utama -->
+          <img src="gambarbg1.jpg" alt="Fashion Collection" class="hero-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- Katalog -->
+    <section id="catalog" class="page">
+      <div class="filter-bar">
+        <select id="category-filter">
+          <option value="all">Semua Kategori</option>
+          <option value="tshirt">T-Shirt</option>
+          <option value="hoodie">Hoodie</option>
+          <option value="crewneck">Crewneck</option>
+        </select>
+        <select id="sort-filter">
+          <option value="newest">Terbaru</option>
+          <option value="price-low">Harga Terendah</option>
+          <option value="price-high">Harga Tertinggi</option>
+        </select>
+      </div>
+      <div class="product-list" id="product-list"></div>
+    </section>
+
+    <!-- Detail Produk -->
+    <section id="product-detail" class="page"></section>
+
+    <!-- Keranjang -->
+    <section id="cart" class="page">
+      <div id="cart-items"></div>
+      <div id="cart-shipping"></div>
+      <div id="cart-total"></div>
+      <div class="cart-actions">
+        <button id="clear-cart" class="secondary-btn">Kosongkan Keranjang</button>
+        <button id="to-checkout" class="primary-btn">Checkout Sekarang</button>
+      </div>
+    </section>
+
+    <!-- Modal Konfirmasi -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <p id="modal-msg">Yakin ingin menghapus item dari keranjang?</p>
+        <div class="modal-actions">
+          <button id="modal-ok" class="primary-btn">Ya</button>
+          <button id="modal-cancel" class="secondary-btn">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifikasi -->
+    <div id="toast"></div>
+
+    <!-- Checkout -->
+    <section id="checkout" class="page">
+      <h2>Checkout</h2>
+      <div class="checkout-container">
+        <form id="checkout-form">
+          <h3>Informasi Pengiriman</h3>
+          <div class="form-group">
+            <label>Nama Penerima</label>
+            <input type="text" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Alamat Lengkap</label>
+            <input type="text" name="address" required>
+          </div>
+          <div class="form-group">
+            <label>No. HP / WhatsApp</label>
+            <input type="text" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>Catatan (Opsional)</label>
+            <input type="text" name="notes">
+          </div>
+
+          <h3>Metode Pengiriman</h3>
+          <div class="form-group">
+            <select name="shipping">
+              <option value="reg">Reguler (2-3 hari) - Rp 15.000</option>
+              <option value="exp">Express (1 hari) - Rp 25.000</option>
+            </select>
+          </div>
+
+          <h3>Metode Pembayaran</h3>
+          <div class="form-group">
+            <select name="payment">
+              <option value="bank">Bank Transfer</option>
+              <option value="ewallet">E-Wallet</option>
+              <option value="cod">COD (Bayar di Tempat)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="primary-btn">Lanjutkan ke Pembayaran</button>
+        </form>
+
+        <div id="order-summary" class="order-summary">
+          <!-- Order summary akan diisi oleh JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment -->
+    <section id="payment" class="page">
+      <h2>Pembayaran</h2>
+      <div id="payment-info"></div>
+    </section>
+
+<!-- Contact -->
+<section id="contact" class="page">
+  <div class="contact-container">
+    <div class="contact-info">
+      <h3>Informasi Kontak</h3>
+      
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong>Alamat Toko</strong>
+          <p>Jl. Raya Rawa Buntu, Kec. Serpong<br>
+          Kota Tangerang Selatan, Banten 15318<br>
+          Indonesia</p>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <i class="fas fa-clock"></i>
+        <div>
+          <strong>Jam Operasional</strong>
+          <p>Setiap Hari<br>
+          10:00 - 18:00 WIB</p>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <i class="fas fa-phone-alt"></i>
+        <div>
+          <strong>Telepon & WhatsApp</strong>
+          <p><a href="https://wa.me/62821515151515" target="_blank">+62 821-5151-5151</a></p>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <i class="fas fa-envelope"></i>
+        <div>
+          <strong>Email</strong>
+          <p><a href="mailto:didunknownn@gmail.com">didunknownn@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="social-links">
+      <h3>Media Sosial</h3>
+      <p>Ikuti kami di media sosial untuk update terbaru dan promo spesial!</p>
+      
+      <div class="social-buttons">
+        <a href="https://wa.me/62821515151515" target="_blank" class="social-btn whatsapp">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp<br><small>Chat Langsung</small></span>
+        </a>
+        
+        <a href="https://www.instagram.com/didunknown/" target="_blank" class="social-btn instagram">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram<br><small>@didunknown</small></span>
+        </a>
+        
+        <a href="https://www.facebook.com/profile.php?id=61580290715883" target="_blank" class="social-btn facebook">
+          <i class="fab fa-facebook"></i>
+          <span>Facebook<br><small>didunknown</small></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="contact-note">
+    <h4>Butuh Bantuan?</h4>
+    <p>Tim customer service kami siap membantu Anda dari Senin hingga Minggu selama jam operasional. 
+    Respon tercepat melalui WhatsApp dengan klik tombol di atas.</p>
+  </div>
+</section>
+
+<!-- About Us -->
+<section id="about" class="page">
+  <div class="about-container">
+    <div class="about-content">
+      <div class="about-header">
+        <h3>didunknown.</h3>
+        <div class="tagline">Unleash Your Style, Upgrade Your Vibes!</div>
+      </div>
+      
+      <div class="about-story">
+        <h4>Cerita Kami</h4>
+        <p>
+          didunknown adalah brand fashion lokal yang lahir dari passion untuk membantu generasi muda 
+          mengekspresikan diri melalui style yang authentic dan berani. Kami percaya bahwa fashion 
+          bukan sekadar tren, melainkan medium untuk menunjukkan identitas dan kepribadian.
+        </p>
+        <p>
+          Setiap desain kami terinspirasi dari energi kreatif anak muda masa kini yang tidak takut 
+          untuk tampil berbeda dan menjadi diri sendiri. Koleksi kami dirancang khusus untuk mereka 
+          yang ingin upgrade penampilan tanpa kehilangan esensi individualitas.
+        </p>
+      </div>
+      
+      <div class="about-values">
+        <h4>Nilai Kami</h4>
+        <div class="values-grid">
+          <div class="value-item">
+            <i class="fas fa-star"></i>
+            <strong>Kualitas Premium</strong>
+            <p>Material terbaik dengan craftsmanship detail</p>
+          </div>
+          <div class="value-item">
+            <i class="fas fa-bolt"></i>
+            <strong>Desain Kekinian</strong>
+            <p>Tren terbaru dengan sentuhan authentic</p>
+          </div>
+          <div class="value-item">
+            <i class="fas fa-heart"></i>
+            <strong>Ramah Kantong</strong>
+            <p>Harga terjangkau untuk kualitas premium</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="about-details">
+      <div class="detail-card">
+        <h4>Informasi</h4>
+        
+        <div class="detail-item">
+          <i class="fas fa-store"></i>
+          <div>
+            <strong>Alamat Toko</strong>
+            <p>Jl. Raya Rawa Buntu, Kec. Serpong<br>
+            Kota Tangerang Selatan, Banten 15318</p>
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <i class="fas fa-clock"></i>
+          <div>
+            <strong>Jam Operasional</strong>
+            <p>Setiap Hari<br>
+            10:00 AM - 06:00 PM (WIB)</p>
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <strong>Email</strong>
+            <p>didunknownn@gmail.com</p>
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <strong>Telepon/WhatsApp</strong>
+            <p>+62 821-5151-5151</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>didunknown</h3>
+        <p>Brand fashion lokal dengan desain kekinian untuk generasi Z yang berani tampil beda.</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <a href="#" data-page="home">Beranda</a>
+        <a href="#" data-page="catalog">Katalog</a>
+        <a href="#" data-page="contact">Kontak</a>
+        <a href="#" data-page="about">Tentang Kami</a>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Hubungi Kami</h3>
+        <p>Email: didunknownn@gmail.com</p>
+        <p>WhatsApp: +0821515151515</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/didunknown/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/62821515151515" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61580290715883" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 didunknown. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
